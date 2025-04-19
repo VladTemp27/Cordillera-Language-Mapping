@@ -8,7 +8,7 @@ Specifically from the [Municities](https://github.com/altcoder/philippines-psgc-
 ## About the Philippine Standard Geographic Code (PSGC)
 The PSGC is a coding scheme of geographic areas in the Philippines. 
 
-![PSGC Coding Scheme](image.png)
+![PSGC Coding Scheme](img/shp_codes.png)
 
 ## Map Generation Process
 
@@ -34,14 +34,8 @@ This visualization focuses on the Cordillera Administrative Region (CAR) with PS
 
 4. **Output**:
    - Saved as interactive "CAR_map.html"
-   ![CAR Region Map](image-1.png)
+   ![CAR Region Map](img/map.png)
 
 ## Notes
 - The original shapefile is excluded from the repository due to size constraints
 - The processed geojson files are saved for reuse and inspection
-- Modular code design separates data filtering from map generation
-
-## TO DO
-- Adding language/dialect population data from external databases
-- Implementing a color gradient based on linguistic or demographic data
-- Adding more interactive features and detailed information panels

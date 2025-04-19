@@ -4,6 +4,8 @@ Cordillera Administrative Region (CAR) Map Maker
 This script generates an interactive map of the Cordillera Administrative Region
 with Baguio City highlighted as a separate feature.
 
+Note: this might be changed based on the frontend requirements (React-leaflet)
+
 Programmer: Benny Gil A. Lactaotao
 """
 
@@ -12,7 +14,6 @@ import geopandas as gpd
 import folium
 from folium.features import GeoJsonTooltip
 from shapely.ops import unary_union
-
 from map_filter import load_or_prepare_data, load_baguio_data
 
 # Constants
