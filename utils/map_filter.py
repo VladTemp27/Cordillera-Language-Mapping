@@ -14,14 +14,6 @@ import geopandas as gpd
 def prepare_data(shapefile_path, region_code, output_path):
     """
     Load shapefile, filter by region code, and save as GeoJSON.
-    
-    Args:
-        shapefile_path: Path to the input shapefile
-        region_code: PSGC region code to filter by (e.g., "14" for CAR)
-        output_path: Path where filtered GeoJSON will be saved
-        
-    Returns:
-        GeoDataFrame containing only the filtered region data
     """
     # Ensure data directory exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -29,7 +21,7 @@ def prepare_data(shapefile_path, region_code, output_path):
     # Load the original shapefile
     shp_file = gpd.read_file(shapefile_path)
 
-    # Filter for specified region
+    # Filter for a specified region
     filtered_region = shp_file[
         shp_file["adm2_psgc"].astype(str).str.startswith(region_code)
     ]
@@ -44,14 +36,6 @@ def prepare_data(shapefile_path, region_code, output_path):
 def load_or_prepare_data(shapefile_path, region_code, output_path):
     """
     Load existing filtered data if available, otherwise create it.
-    
-    Args:
-        shapefile_path: Path to the input shapefile
-        region_code: PSGC region code to filter by (e.g., "14" for CAR)
-        output_path: Path where filtered GeoJSON will be saved
-        
-    Returns:
-        GeoDataFrame containing the region data
     """
     if os.path.exists(output_path):
         print("Using existing filtered data")
@@ -63,13 +47,6 @@ def load_or_prepare_data(shapefile_path, region_code, output_path):
 def load_baguio_data(baguio_path, target_crs=None):
     """
     Load Baguio City GeoJSON data.
-    
-    Args:
-        baguio_path: Path to Baguio GeoJSON file
-        target_crs: Target coordinate reference system to convert to (if needed)
-        
-    Returns:
-        GeoDataFrame containing Baguio data, or None if file doesn't exist
     """
     if not os.path.exists(baguio_path):
         print(f"Baguio GeoJSON not found at: {baguio_path}")
