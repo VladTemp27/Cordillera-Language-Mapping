@@ -5,6 +5,8 @@ ENV POSTGRES_USER=amalzen
 ENV POSTGRES_PASSWORD=amalzen
 ENV POSTGRES_DB=car_languages
 
+COPY init-db.sql /docker-entrypoint-initdb.d/
+
 # Expose default PostgreSQL port
 EXPOSE 5432
 
@@ -15,5 +17,8 @@ HEALTHCHECK --interval=5s --timeout=5s --retries=3 \
 # Create a volume to persist data outside the container
 VOLUME ["/var/lib/postgresql/data"]
 
-# To Run the Container
+# To build the Container
 # docker build -t car_languages_db .
+
+# To run the Container
+# docker run -d --name car_languages_db -p 5432:5432 car_languages_db

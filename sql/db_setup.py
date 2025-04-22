@@ -1,3 +1,4 @@
+# This script is now deprecated. Use the init-db.sql instead.
 import psycopg2
 import json
 import os
