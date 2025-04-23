@@ -1,7 +1,7 @@
 import React from 'react';
-import './Sidebar.css';
+import './SideBar.css';
 
-const SideBar = ({ activeTab, setActiveTab }) => {
+const SideBar = ({ activeTab, setActiveTab, children }) => {
   return (
     <div className="sidebar">
       <div className="sidebar-title">
@@ -9,7 +9,7 @@ const SideBar = ({ activeTab, setActiveTab }) => {
         <h1>ADMINISTRATIVE</h1>
         <h1>REGION (CAR)</h1>
       </div>
-      
+
       <div className="tabs">
         <button 
           className={`tab-button ${activeTab === 'Information' ? 'active' : ''}`}
@@ -25,9 +25,11 @@ const SideBar = ({ activeTab, setActiveTab }) => {
           Language
         </button>
       </div>
-      
+
       <div className="content">
-        {/* Dynamic content will be rendered here based on activeTab */}
+        <div className="main-content">
+          {children} {/* <-- render active tab content here */}
+        </div>
       </div>
     </div>
   );

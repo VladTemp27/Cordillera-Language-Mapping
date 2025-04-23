@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Sidebar from '../SideBar/SideBar';
+import SideBar from '../SideBar/SideBar';
 import Map from '../Map/Map';
 import Language from '../Language/Language';
 import Information from '../Information/Information';
@@ -11,10 +11,11 @@ const LanguageMapping = () => {
   return (
     <div className="language-mapping">
       <div className="content">
-        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-        <div className="main-content">
+        <SideBar activeTab={activeTab} setActiveTab={setActiveTab}>
           {activeTab === 'Information' && <Information />}
           {activeTab === 'Language' && <Language />}
+        </SideBar>
+        <div className="map-container">
           <Map />
         </div>
       </div>
