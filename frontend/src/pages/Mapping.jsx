@@ -1,5 +1,5 @@
 import React from 'react'
-import LanguageMapping from '../components/LanguageMapping'
+import LanguageMapping from '../components/LanguageMapping/LanguageMapping'
 
 const Mapping = () => {
   return (

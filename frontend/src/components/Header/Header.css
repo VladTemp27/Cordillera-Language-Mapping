@@ -1,0 +1,37 @@
+.header {
+    width: 100%;
+    padding: 10px;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .header-title {
+    padding: 8px 12px;
+    background-color: #f5e5e5;
+    border-radius: 2px;
+    font-weight: bold;
+  }
+  
+  .header-search {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    flex: 1;
+  }
+  
+  .search-input {
+    padding: 6px 8px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    width: 300px;
+  }
+  
+  .search-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: -30px;
+  }
+  
