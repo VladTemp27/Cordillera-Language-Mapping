@@ -2,16 +2,21 @@ import React from "react";
 import "./LeafletMap.css";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
-import car_region_data from "../../assets/data/car_region.json";
+import car_region_data from "../../assets/data/car_region.json"; // Example data
 
-const LeafletMap = () => {
-  console.log("GeoJSON Data:", car_region_data);
+const LeafletMap = ({ onProvinceClick }) => {
+  console.log("GeoJSON Data:", car_region_data); // Ensure the GeoJSON data is loaded
+
+  const handleProvinceClick = (provinceName) => {
+    onProvinceClick(provinceName);
+  };
 
   return (
     <MapContainer
-      center={[17.243776364474886, 120.92880861902745]}
+      center={[16.4023, 120.5960]}
       zoom={9}
-      scrollWheelZoom={false}
+      scrollWheelZoom={true}
+      style={{ width: "100%", height: "100%" }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -21,8 +26,15 @@ const LeafletMap = () => {
         maxNativeZoom={20}
         noWrap={false}
       />
-      <GeoJSON data={car_region_data} />
-      </MapContainer>
+      <GeoJSON
+        data={car_region_data}
+        onEachFeature={(feature, layer) => {
+          layer.on("click", () => {
+            handleProvinceClick(feature.properties.name);
+          });
+        }}
+      />
+    </MapContainer>
   );
 };
 
