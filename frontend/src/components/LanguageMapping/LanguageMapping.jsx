@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SideBar from "../SideBar/SideBar";
-import Map from "../Map/Map";
+import LeafletMap from "../LeafletMap/LeafletMap";
 import Language from "../Language/Language";
 import Information from "../Information/Information";
 import "../LanguageMapping/LanguageMapping.css";
@@ -17,7 +17,7 @@ const LanguageMapping = () => {
         </SideBar>
       </div>
       <div className="map-container">
-        <Map />
+        <LeafletMap />
       </div>
     </div>
   );
