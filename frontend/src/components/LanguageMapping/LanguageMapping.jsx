@@ -10,7 +10,7 @@ const LanguageMapping = () => {
 
   return (
     <div className="language-mapping">
-      <div className="content">
+      <div className="language-mapping-container">
         <SideBar activeTab={activeTab} setActiveTab={setActiveTab}>
           {activeTab === 'Information' && <Information />}
           {activeTab === 'Language' && <Language />}

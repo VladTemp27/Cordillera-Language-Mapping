@@ -1,9 +1,9 @@
 .information {
-    padding: 20px;
-  }
+  padding: 0px 12px;
+}
   
   .information-content {
-    font-size: 14px;
+    font-size: normal;
     line-height: 1.6;
     color: #333;
   }
