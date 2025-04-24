@@ -1,13 +1,16 @@
 .language-mapping {
   display: grid;
-  grid-template-columns: 40% 1fr;
+  grid-template-columns: 30% 1fr;
   grid-template-rows: 1fr;
-  gap: 10px 10px;
   height: 100vh;
 }
 
-.language-mapping-container {
+.map-container {
+  border: 12px solid #4b0000;
+}
+
+.sidebar-container {
   display: flex;
-  flex: 1;
-  height: auto;
+  flex-direction: column;
+  padding: 8px 20px;
 }
