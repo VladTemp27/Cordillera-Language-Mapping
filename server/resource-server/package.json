@@ -11,7 +11,8 @@
   "author": "Mark Lestat Agustin",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0",
+    "dotenv": "^16.5.0",
+    "express": "^4.18.2",
     "nodemon": "^3.1.10"
   }
 }
