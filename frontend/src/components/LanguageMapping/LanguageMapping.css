@@ -1,22 +1,16 @@
 .language-mapping {
-  width: 100%;
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  grid-template-rows: 1fr;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  color: #000;
 }
 
-.content {
-  display: flex;
-  flex: 1;
+.map-container {
+  border: 12px solid #4b0000;
 }
 
-.main-content {
-  flex: 1;
+.sidebar-container {
   display: flex;
   flex-direction: column;
+  padding: 8px 20px;
 }
