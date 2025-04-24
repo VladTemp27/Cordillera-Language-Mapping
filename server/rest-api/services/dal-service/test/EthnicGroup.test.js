@@ -1,8 +1,8 @@
 const {
 	testConnection
 } = require('../config/db');
-const EthnicGroupService = require('../data-service/EthnicGroup');
-const ProvinceService = require('../data-service/Province');
+const EthnicGroupService = require('../data-service/EthnicGroupDAL');
+const ProvinceService = require('../data-service/ProvinceDAL');
 
 // Ensure database connection before all tests
 beforeAll(async () => {

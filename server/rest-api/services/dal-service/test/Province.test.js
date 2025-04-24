@@ -1,7 +1,7 @@
 const {
 	testConnection
 } = require('../config/db');
-const ProvinceService = require('../data-service/Province');
+const ProvinceService = require('../data-service/ProvinceDAL');
 
 // Ensure database connection before all tests
 beforeAll(async () => {
