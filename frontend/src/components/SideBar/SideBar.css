@@ -18,11 +18,3 @@
   overflow-wrap: break-word;
   margin: 0;
 }
-
-  /* Create sidebar content component */
-.content {
-  background-color: yellow;
-  flex: 1;
-  overflow-y: auto;
-}
-  

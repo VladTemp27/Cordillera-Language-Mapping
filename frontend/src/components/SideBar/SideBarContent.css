@@ -1,0 +1,5 @@
+.content {
+    background-color: yellow;
+    flex: 1;
+    overflow-y: auto;
+  }
