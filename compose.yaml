@@ -8,6 +8,8 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
     networks:
       - app_network
 
@@ -35,6 +37,8 @@ services:
       - db
     networks:
       - app_network
+    volumes:
+      - ./pgadmin/servers.json:/pgadmin4/servers.json:ro
 
 networks:
   app_network:
