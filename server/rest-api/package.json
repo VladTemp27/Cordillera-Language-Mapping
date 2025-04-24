@@ -2,5 +2,29 @@
   "dependencies": {
     "dotenv": "^16.5.0",
     "pg": "^8.15.5"
-  }
+  },
+  "name": "rest-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true,
+    "testMatch": [
+      "**/services/dal-service/test/**/*.test.js"
+    ],
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ]
+  },
+  "author": "Aaron Kyle Aguilar",
+  "license": "ISC",
+  "description": ""
 }
