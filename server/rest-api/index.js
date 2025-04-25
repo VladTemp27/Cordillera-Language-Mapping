@@ -17,7 +17,7 @@ app.use('/api/languages', languageRoutes);
 app.use('/api/provinces', provinceRoutes);
 
 // Health check endpoint
-app.get("/status", (req, res) => {
+app.get("/health", (req, res) => {
     res.status(200).json({
         status: "success",
         message: "Server is up and running",
