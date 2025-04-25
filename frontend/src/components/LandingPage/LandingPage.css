@@ -22,19 +22,43 @@
     backdrop-filter: blur(3px);
     display: flex;
     flex-direction: column;
-    gap: 2px;
   }
   
-  .lp-header-sub {
-    font-size: 0.66rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    opacity: 0.9;
+  .lp-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align content to the left */
+    padding: 10px;
   }
-  
+
+  .lp-header-title-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the logo and text */
+  }
+
+  .lp-header-logo {
+    width: 60px; /* Adjust the size of the logo */
+    height: auto;
+  }
+
+  .lp-header-text {
+    display: flex;
+    flex-direction: column;
+  }
+
   .lp-header-title {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .lp-header-sub {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+    margin: 0;
   }
   
   /* ---------- Hero ---------- */
@@ -291,4 +315,3 @@
   html {
     scroll-behavior: smooth;
   }
-  
