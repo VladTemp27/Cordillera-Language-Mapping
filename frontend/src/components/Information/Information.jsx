@@ -51,6 +51,7 @@ const Information = ({ selectedProvince }) => {
     ifugao: ifugao,
     kalinga: kalinga,
     mountain: mountain,
+    "mountain province": mountain,
   };
 
   // FIXME: There is a bug here such that when first loaded an error is shown instead of prompting the user to select a province
