@@ -11,6 +11,7 @@ Programmer: Benny Gil A. Lactaotao
 
 import os
 import geopandas as gpd
+import pandas as pd
 import folium
 from folium.features import GeoJsonTooltip
 from shapely.ops import unary_union
@@ -23,7 +24,7 @@ SHAPEFILE_PATH = "PH_Adm2_ProvDists.shp/PH_Adm2_ProvDists.shp.shp"
 OUTPUT_DIR = "data"
 OUTPUT_GEOJSON = f"{OUTPUT_DIR}/car_provinces.geojson"
 BAGUIO_GEOJSON = f"{OUTPUT_DIR}/baguio.geojson"
-MODIFIED_GEOJSON = f"{OUTPUT_DIR}/car_region.geojson"
+MODIFIED_GEOJSON = f"{OUTPUT_DIR}/car_region.json"
 OUTPUT_MAP = "CAR_map.html"
 
 # Map styling
@@ -103,14 +104,31 @@ def process_baguio_cutout(gdf, baguio_gdf):
 
     # Update the province geometry in the GeoDataFrame
     gdf_modified.loc[province_mask, "geometry"] = updated_province
-
+    
+    # Prepare Baguio data to be added to the result
+    # Create a new row for Baguio with all necessary properties
+    baguio_row = baguio_gdf.iloc[0].copy()
+    
+    # Add any missing properties that exist in gdf but not in baguio_gdf
+    for col in gdf.columns:
+        if col not in baguio_row:
+            if col == "adm2_en":
+                baguio_row[col] = baguio_row.get("name", "City of Baguio")
+            elif col == "geo_level":
+                baguio_row[col] = "City"
+            else:
+                baguio_row[col] = None
+    
+    # Add Baguio as a new row to the modified dataframe
+    baguio_df = gpd.GeoDataFrame([baguio_row], geometry="geometry", crs=gdf_modified.crs)
+    gdf_modified = gpd.GeoDataFrame(pd.concat([gdf_modified, baguio_df], ignore_index=True))
+    
     # Save the modified GeoJSON for inspection
     os.makedirs(os.path.dirname(MODIFIED_GEOJSON), exist_ok=True)
     gdf_modified.to_file(MODIFIED_GEOJSON, driver="GeoJSON")
     print("Created modified GeoJSON with Baguio cutout")
 
     return gdf_modified
-
 
 def add_baguio_layer(m, baguio_gdf):
     """Add Baguio City as a separate layer to the map."""
@@ -146,6 +164,12 @@ def create_map(gdf, center, region_name, baguio_path=None, output_file="CAR_map.
             gdf_modified = process_baguio_cutout(gdf, baguio_gdf)
             add_region_layer(m, gdf_modified, region_name)
             add_baguio_layer(m, baguio_gdf)
+            
+            # Ensure modified GeoJSON is saved
+            os.makedirs(os.path.dirname(MODIFIED_GEOJSON), exist_ok=True)
+            gdf_modified.to_file(MODIFIED_GEOJSON, driver="GeoJSON")
+            print(f"Modified GeoJSON with Baguio cutout saved to {MODIFIED_GEOJSON}")
+            
         except (IOError, ValueError, TypeError) as e:
             print(f"Error processing Baguio cutout: {e}")
             # Fall back to regular mapping without cutout
@@ -158,7 +182,6 @@ def create_map(gdf, center, region_name, baguio_path=None, output_file="CAR_map.
     folium.LayerControl().add_to(m)
     m.save(output_file)
     print(f"Map saved to {output_file}")
-
 
 def main():
     """Load data and create the CAR map with Baguio City cutout."""
