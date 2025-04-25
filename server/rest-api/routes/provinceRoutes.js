@@ -14,6 +14,7 @@ router.get('/getall', async (req, res) => {
                 const ethnicGroups = await getEthnicGroupsByProvinceId(province.id);
                 const languages = await getLanguagesByProvinceId(province.id);
                 return {
+                    id: province.id,
                     name: province.name,
                     history: province.history,
                     ethnicGroups: ethnicGroups.map(eg => eg.name),
