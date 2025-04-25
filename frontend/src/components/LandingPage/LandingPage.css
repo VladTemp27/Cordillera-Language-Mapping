@@ -29,6 +29,7 @@
 }
 
 .lp-header-content {
+  cursor: pointer;
   padding: 8px;
   display: flex;
   align-items: center;

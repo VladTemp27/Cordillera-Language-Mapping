@@ -1,11 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import "../LandingPage/LandingPage.css";
 import baguioSeal from "../../assets/BaguioLogo.png";
 
 const Header = ({ setActiveTab }) => {
+  const navigate = useNavigate();
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
       <header className="lp-header">
-        <div className="lp-header-content">
+        <div className="lp-header-content" onClick={handleLogoClick}>
           <div className="lp-header-title-container">
             <img
               src={baguioSeal}
