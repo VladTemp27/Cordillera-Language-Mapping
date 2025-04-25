@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllProvinces , getProvinceById } = require("../data-service/ProvinceDAL");
+const { getAllProvinces , getProvinceById } = require("../services/dal-service/data-service/ProvinceDAL");
 
 const router = express.Router();
 
