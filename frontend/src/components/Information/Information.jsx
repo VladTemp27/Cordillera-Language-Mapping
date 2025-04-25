@@ -9,12 +9,11 @@ const Information = ({ selectedProvince }) => {
     const sampleData = {
       provinces: [
         {
-          name: "City of Baguio",
+          name: "Baguio",
           history:
             "Baguio is known as the Summer Capital of the Philippines, famous for its cool climate, scenic views, and vibrant culture.",
-          ethnicGroups: ["Igorot", "Ibaloi", "Kankanaey"],
           image:
-            "https://upload.wikimedia.org/wikipedia/commons/2/2b/Baguio_City_Sunrise.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Session_Road_top_view_%28Baguio_City%3B_02-25-2024%29.jpg/2560px-Session_Road_top_view_%28Baguio_City%3B_02-25-2024%29.jpg"
         },
       ],
     };
@@ -22,37 +21,22 @@ const Information = ({ selectedProvince }) => {
     setData(sampleData);
   }, []);
 
-  // TODO: Check this code if it is correct.
-  // Normalize the selected province name for matching
-  const normalizeName = (name) => {
-    if (!name) return ""; // Safeguard in case 'name' is null or undefined
-    return name.replace(/^City of /i, "").trim(); // Remove "City of" prefix
-  };
-
-    // TODO: Check this code if it is correct.
   const selectedData = data?.provinces.find(
     (province) =>
-      normalizeName(province.name).toLowerCase() === normalizeName(selectedProvince)?.toLowerCase() // Case-insensitive comparison with normalized names
+      province.name.toLowerCase() === selectedProvince?.toLowerCase()
   );
 
   return (
     <div className="information">
       {selectedData ? (
         <div className="province-card">
-          <h3>{selectedData.name}</h3>
           <img
             src={selectedData.image}
             alt={selectedData.name}
-            className="province-image"
+            className="information-image"
           />
           <p>
             <strong>Short History:</strong> {selectedData.history}
-          </p>
-          <p>
-            <strong>Ethnic Groups:</strong>{" "}
-            {selectedData.ethnicGroups.length > 0
-              ? selectedData.ethnicGroups.join(", ")
-              : "No data available"}
           </p>
         </div>
       ) : (

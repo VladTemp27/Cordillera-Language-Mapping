@@ -1,7 +1,6 @@
 /* ---------- Global wrapper ---------- */
 .lp-wrapper {
     min-height: 100vh;
-    font-family: "Inter", Arial, sans-serif;
     /* emerald‑400 → emerald‑900 vertical gradient + glow */
     background: radial-gradient(circle at 50% -20%, #4ade80 0%, #166534 40%, #022c22 90%);
     color: #f5f5f5;
@@ -107,19 +106,17 @@
   
   /* ---------- Tagline ---------- */
   .lp-tagline {
-    margin: 20px auto 0;
     max-width: 740px;
-    font-size: 0.85rem;
-    text-align: center;
-    padding: 0 12px;
+    font-size: large;
     font-weight: 500;
   }
   
   /* ---------- Feature Cards ---------- */
   .lp-features {
+    align-items: center;
     margin: 24px auto 0;
     max-width: 1080px;
-    padding: 0 12px;
+    padding: 24px 12px;
     display: flex;
     flex-direction: column;
     gap: 22px;
