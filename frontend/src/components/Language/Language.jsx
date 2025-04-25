@@ -10,10 +10,11 @@ const columnsForTable1 = [
 ];
 
 // Subject to change
-const columnsForTable2 = [
-    {header: "English", accessor: "english"},
-    {header: "Translation", accessor: "translation"},
-];
+//yes it is subject to change since we don't have data to replace this with.
+// const columnsForTable2 = [
+//     {header: "English", accessor: "english"},
+//     {header: "Translation", accessor: "translation"},
+// ];
 
 /**
  * Essentially, data will be used in the table rows must be in the form of an array.
@@ -54,8 +55,9 @@ const Language = ({provinceName}) => {
                         data={provinceLanguages.dialect}
                     />
 
-                    <h2>**Language**</h2>
-                    <LanguageTable columns={columnsForTable2}/>
+                    {/*we dont have the data for this so bye bye*/}
+                    {/*<h2>**Language**</h2>*/}
+                    {/*<LanguageTable columns={columnsForTable2}/>*/}
                 </>
             ) : (
                 <p>Loading data...</p>
