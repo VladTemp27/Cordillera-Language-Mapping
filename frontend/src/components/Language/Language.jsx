@@ -22,80 +22,80 @@ const columnsForTable2 = [
  * Example: dialect: "Ilocano", household_count: 44501, percentage: 75.50
  *  */
 
-const Language = ({ provinceName }) => {
-  const [provinceID, setProvinceID] = useState(null);
-  const [provinceLanguages, setProvinceLanguages] = useState(null);
+const Language = ({provinceName}) => {
+    const [provinceID, setProvinceID] = useState(null);
+    const [provinceLanguages, setProvinceLanguages] = useState(null);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const id = await fetchProvinceID(provinceName);
-        setProvinceID(id);
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const id = await fetchProvinceID(provinceName);
+                setProvinceID(id);
 
-        if (id) {
-          const languageData = await fetchLanguagesByProvince(id);
-          setProvinceLanguages(languageData);
-          console.log("Languages by Province:", languageData);
+                if (id) {
+                    const languageData = await fetchLanguagesByProvince(id);
+                    setProvinceLanguages(languageData);
+                    console.log("Languages by Province:", languageData);
+                }
+            } catch (error) {
+                console.error("Error loading data:", error);
+            }
         }
-      } catch (error) {
-        console.error("Error loading data:", error);
-      }
-    }
 
-    fetchData();
-  }, [provinceName]);
+        fetchData();
+    }, [provinceName]);
 
-  return (
-      <div className="language-content">
-        {provinceLanguages ? (
-            <>
-              <LanguageTable
-                  columns={columnsForTable1}
-                  data={provinceLanguages.dialect}
-              />
+    return (
+        <div className="language-content">
+            {provinceLanguages ? (
+                <>
+                    <LanguageTable
+                        columns={columnsForTable1}
+                        data={provinceLanguages.dialect}
+                    />
 
-              <h2>**Language**</h2>
-              <LanguageTable columns={columnsForTable2} />
-            </>
-        ) : (
-            <p>Loading data...</p>
-        )}
-      </div>
-  );
+                    <h2>**Language**</h2>
+                    <LanguageTable columns={columnsForTable2}/>
+                </>
+            ) : (
+                <p>Loading data...</p>
+            )}
+        </div>
+    );
 };
 
 export default Language;
 
 // Keep these helper functions the same
 function fetchProvinceID(provinceName) {
-  console.log("Fetching Province Data");
-  return axios
-      .get("http://localhost/api/provinces/getAll")
-      .then((response) => {
-        const provinces = response.data.provinces;
-        const matched = provinces.find((p) => p.name === provinceName);
-        return matched ? matched.id : null;
-      })
-      .catch((error) => {
-        console.error("Error fetching provinces:", error);
-        return null;
-      });
+    console.log("Fetching Province Data");
+    return axios
+        .get("http://localhost/api/provinces/getAll")
+        .then((response) => {
+            const provinces = response.data.provinces;
+            const matched = provinces.find((p) => p.name === provinceName);
+            return matched ? matched.id : null;
+        })
+        .catch((error) => {
+            console.error("Error fetching provinces:", error);
+            return null;
+        });
 }
 
 function fetchLanguagesByProvince(provinceID) {
-  console.log(`Fetching language data for ${provinceID}`);
-  return axios
-      .get(`http://localhost/api/languages/raw/province/${provinceID}`)
-      .then((response) => {
-        const formatted = response.data.map((lang) => ({
-          dialect: lang.name,
-          household_count: lang.household_count,
-          percentage: parseFloat(lang.percentage),
-        }));
-        return { dialect: formatted };
-      })
-      .catch((error) => {
-        console.error("Error fetching language data:", error);
-        return { dialect: [] };
-      });
+    console.log(`Fetching language data for ${provinceID}`);
+    return axios
+        .get(`http://localhost/api/languages/raw/province/${provinceID}`)
+        .then((response) => {
+            const formatted = response.data.map((lang) => ({
+                dialect: lang.name,
+                household_count: lang.household_count,
+                percentage: `${parseFloat(lang.percentage)}%`, // 👈 Add % here
+            }));
+            return {dialect: formatted};
+        })
+        .catch((error) => {
+            console.error("Error fetching language data:", error);
+            return {dialect: []};
+        });
 }
