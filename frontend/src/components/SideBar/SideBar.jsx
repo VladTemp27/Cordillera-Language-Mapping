@@ -7,7 +7,7 @@ const SideBar = ({ children, activeTab, setActiveTab }) => {
   return (
     <div>
       <div className="sidebar-title">
-        <h1>CORDILLERA ADMINISTRATIVE REGION (CAR)</h1>
+        <h1>**Province**</h1>
       </div>
       <SideBarTab activeTab={activeTab} setActiveTab={setActiveTab} />
       <SideBarContent>{children}</SideBarContent>
