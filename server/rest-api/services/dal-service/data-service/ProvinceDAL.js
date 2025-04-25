@@ -16,15 +16,15 @@ const {
  */
 const PROVINCE_QUERIES = {
 	GET_ALL: `
-    SELECT id, name, history
-    FROM provinces
-    ORDER BY name ASC
-  `,
+		SELECT id, name, history
+		FROM provinces
+		ORDER BY name ASC
+  	`,
 	GET_BY_ID: `
-    SELECT id, name, history
-    FROM provinces
-    WHERE id = $1
-  `
+		SELECT id, name, history
+		FROM provinces
+		WHERE id = $1
+  	`
 };
 
 /**

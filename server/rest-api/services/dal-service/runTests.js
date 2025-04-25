@@ -7,11 +7,11 @@ console.log('Running tests using Jest...');
 const { execSync } = require('child_process');
 
 try {
-  // Execute Jest to run all tests
-  execSync('npx jest', { stdio: 'inherit' });
-  console.log('\n✅ All tests completed!');
-  process.exit(0);
+	// Execute Jest to run all tests
+	execSync('npx jest', { stdio: 'inherit' });
+	console.log('\n✅ All tests completed!');
+	process.exit(0);
 } catch (error) {
-  console.error('\n❌ Tests failed!');
-  process.exit(1);
+	console.error('\n❌ Tests failed!');
+	process.exit(1);
 }
