@@ -1,7 +1,7 @@
 import React from "react";
 import "./LandingPage.css";
 
-// ---- asset imports 
+// ---- asset imports
 import heroImg from "../../assets/BaguioMountains.png";
 import cordilleraDance from "../../assets/Cordillerans.png";
 import kalingaTattoo from "../../assets/ApoWandOd.png";
@@ -9,7 +9,8 @@ import baguioSeal from "../../assets/BaguioLogo.png";
 import baguioPocket from "../../assets/BIMP.png";
 import trafficMon from "../../assets/CGOB.png";
 import mayorPic from "../../assets/Magalong.png";
-import QuickLinks from "../QuickLinks/QuickLinks";  // Aaron - QuickLinks Component
+import QuickLinks from "../QuickLinks/QuickLinks"; // Aaron - QuickLinks Component
+import Culture from "../Culture/Culture";
 // ------------------------
 
 const LandingPage = () => (
@@ -25,36 +26,20 @@ const LandingPage = () => (
       <img src={heroImg} alt="Baguio mountains" />
       <div className="lp-hero-overlay">
         <h2>
-          breathe <span>BAGUIO</span> 
+          breathe <span>BAGUIO</span>
         </h2>
         <p>
           This web application allows users to search, discover, and learn about
           the diverse languages and dialects spoken in Baguio City. You’ll get a
-          glimpse from Ibaloi, Kankanaey, Inbal, and beyond—each tongue revealing
-          roots of heritage, identity, and shared resilience.
+          glimpse from Ibaloi, Kankanaey, Inbal, and beyond—each tongue
+          revealing roots of heritage, identity, and shared resilience.
         </p>
         <button>TRY NOW</button>
       </div>
     </section>
 
-    <p className="lp-tagline">
-      Threads of the Highlands: Celebrating Cordillera’s Culture and Heritage
-    </p>
-
     {/* Feature cards */}
-    <section className="lp-features">
-      <FeatureCard
-        img={cordilleraDance}
-        title="Echoes of the Highlands: Traditional Cordilleran Dance"
-        text="This powerful dance performance showcases the rhythm, unity, and grit of the Cordillerans. Woven cultural costumes and synchronized movements are passed down through generations—honoring both the ancestors and the land."
-      />
-      <FeatureCard
-        img={kalingaTattoo}
-        title="Wisdom and Identity: The Tattooed Woman of Kalinga"
-        text="A symbol of honor and bravery, the traditional tattoos of the Kalinga people reflect a lifetime of cultural pride. This elder, a bearer of ancient wisdom, continues to share the stories, rituals, and heritage of her people."
-        reverse
-      />
-    </section>
+    <Culture />
 
     {/* Quick links
     <section className="lp-links">
@@ -67,7 +52,7 @@ const LandingPage = () => (
       </div>
     </section> */}
 
-    <QuickLinks /> 
+    <QuickLinks />
 
     {/* Mayor */}
     <section className="lp-mayor">
