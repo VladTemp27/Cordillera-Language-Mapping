@@ -2,8 +2,8 @@
 .lp-wrapper {
     min-height: 100vh;
     /* emerald‑400 → emerald‑900 vertical gradient + glow */
-    background: radial-gradient(circle at 50% -20%, #4ade80 0%, #166534 40%, #022c22 90%);
-    color: #f5f5f5;
+    background:#001f16;
+    color: black;
   }
   
   /* remove default gap above h1 */
@@ -45,6 +45,7 @@
   .lp-header-text {
     display: flex;
     flex-direction: column;
+    color: white
   }
 
   .lp-header-title {
@@ -130,6 +131,7 @@
   
   /* ---------- Tagline ---------- */
   .lp-tagline {
+    color: white;
     max-width: 740px;
     font-size: large;
     font-weight: 500;
@@ -150,7 +152,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 14px;
-    background: rgba(255, 255, 255, 0.08);
+    background: #001f16;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
@@ -178,6 +180,7 @@
   }
   
   .lp-card-body {
+    background-color: #ffff;
     padding: 20px 22px;
     display: flex;
     flex-direction: column;
@@ -185,7 +188,7 @@
   }
   
   .lp-card-body h4 {
-    color: #d9f99d; /* lime‑100 */
+    color: red; /* lime‑100 */
     font-size: 0.98rem;
     margin-bottom: 6px;
     font-weight: 600;

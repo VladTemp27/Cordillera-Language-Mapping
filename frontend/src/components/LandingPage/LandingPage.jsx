@@ -6,6 +6,7 @@ import baguioSeal from "../../assets/BaguioLogo.png"; // Baguio logo
 import QuickLinks from "../QuickLinks/QuickLinks";
 import Culture from "../Culture/Culture";
 import Hero from "../HeroComponent/BreatheBaguio";
+import MayorsCorner from "../MayorsCorner/MayorsCorner";
 // ------------------------
 
 const LandingPage = () => (
@@ -29,6 +30,8 @@ const LandingPage = () => (
     <Culture />
     {/* Quick links */}
     <QuickLinks />
+    {/* Mayor's Corner */}
+    <MayorsCorner />
   </main>
 );
 
