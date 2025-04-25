@@ -10,17 +10,20 @@ Programmer: Benny Gil A. Lactaotao
 """
 
 import os
+
+import folium
 import geopandas as gpd
 import pandas as pd
-import folium
 from folium.features import GeoJsonTooltip
 from shapely.ops import unary_union
+
 from map_filter import load_or_prepare_data, load_baguio_data
 
 # Constants
 REGION_CODE = "14"  # CAR region
 REGION_NAME = "Cordillera Administrative Region (CAR)"
 SHAPEFILE_PATH = "PH_Adm2_ProvDists.shp/PH_Adm2_ProvDists.shp.shp"
+
 OUTPUT_DIR = "data"
 OUTPUT_GEOJSON = f"{OUTPUT_DIR}/car_provinces.geojson"
 BAGUIO_GEOJSON = f"{OUTPUT_DIR}/baguio.geojson"
@@ -157,7 +160,7 @@ def create_map(gdf, center, region_name, baguio_path=None, output_file="CAR_map.
 
     # Process Baguio cutout if available
     baguio_gdf = load_baguio_data(baguio_path, gdf.crs) if baguio_path else None
-    
+
     if baguio_gdf is not None:
         try:
             # Process Baguio cutout and add layers
