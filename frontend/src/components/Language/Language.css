@@ -1,9 +1,5 @@
-.language {
-  padding: 0px 12px;
-}
-  
-.language-content {
-  font-size: normal;
+  .language-content {
+  padding: 12px 0px;
   line-height: 1.6;
   color: #333;
 }
