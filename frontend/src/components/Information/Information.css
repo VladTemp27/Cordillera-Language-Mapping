@@ -1,0 +1,30 @@
+.information {
+  padding: 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.information-image {
+  text-align: center;
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+.province-card {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .information {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

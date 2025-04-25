@@ -1,0 +1,16 @@
+.language-mapping {
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  grid-template-rows: 1fr;
+  height: 100vh;
+}
+
+.map-container {
+  border: 12px solid #0e2805;
+}
+
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 20px;
+}

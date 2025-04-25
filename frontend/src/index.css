@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&display=swap');
+
+body {
+  background-color: white;
+  margin: 0;
+  font-family: 'Inclusive Sans', sans-serif;
+  color: black;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
