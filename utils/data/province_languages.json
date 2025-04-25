@@ -1,0 +1,51 @@
+{
+    "Abra": [
+        ["Ilocano", 44501, 75.5],
+        ["Itneg/Tinguian-Maeng", 3090, 5.2],
+        ["Itneg/Tinguian-Masadiit", 2097, 3.6],
+        ["Itneg/Tinguian-Adasen", 1816, 3.1],
+        ["Itneg/Tinguian-Inlaud", 1384, 2.3]
+    ],
+    "Apayao": [
+        ["Ilocano", 17673, 61.2],
+        ["Isnag", 7939, 27.5],
+        ["Malaueg", 1077, 3.7],
+        ["Kalinga", 687, 2.4],
+        ["Tagalog", 332, 1.2]
+    ],
+    "Benguet": [
+        ["Kankanaey", 42333, 36.3],
+        ["Ilocano", 39527, 33.9],
+        ["Ibaloi/Ibaloy", 19227, 16.5],
+        ["Tagalog", 8532, 7.3],
+        ["Kalanguya", 3365, 2.9]
+    ],
+    "Baguio": [
+        ["Tagalog", 44623, 44.5],
+        ["Ilocano", 44172, 44.1],
+        ["Kankanaey", 4311, 4.3],
+        ["English", 1892, 1.9],
+        ["Pangasinan", 968, 1.0]
+    ],
+    "Ifugao": [
+        ["Tuwali", 15739, 32.3],
+        ["Ayangan", 13598, 27.9],
+        ["Ilocano", 9566, 19.6],
+        ["Kalanguya", 5473, 11.2],
+        ["Ayangan-Henanga", 2128, 4.4]
+    ],
+    "Kalinga": [
+        ["Kalinga", 25178, 52.4],
+        ["Ilocano", 21149, 44.0],
+        ["Tagalog", 780, 1.6],
+        ["Baliwon", 153, 0.32],
+        ["Sinadanga", 146, 0.3]
+    ],
+    "Mountain Province": [
+        ["Kankanaey", 11777, 31.3],
+        ["Applai", 6744, 17.9],
+        ["Bontok", 5475, 14.6],
+        ["Ilocano", 4989, 13.3],
+        ["Balangao", 2535, 6.7]
+    ]
+}
