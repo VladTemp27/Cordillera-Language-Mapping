@@ -3,11 +3,11 @@ import "./SideBar.css";
 import SideBarTab from "./SideBarTab";
 import SideBarContent from "./SideBarContent";
 
-const SideBar = ({ children, activeTab, setActiveTab }) => {
+const SideBar = ({ children, activeTab, setActiveTab, provinceName }) => {
   return (
     <div>
       <div className="sidebar-title">
-        <h1>**Province**</h1>
+        <h1>{provinceName}</h1>
       </div>
       <SideBarTab activeTab={activeTab} setActiveTab={setActiveTab} />
       <SideBarContent>{children}</SideBarContent>

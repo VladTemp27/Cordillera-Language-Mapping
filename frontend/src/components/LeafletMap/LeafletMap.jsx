@@ -9,6 +9,7 @@ const LeafletMap = ({ onProvinceClick }) => {
 
   const handleProvinceClick = (provinceName) => {
     onProvinceClick(provinceName);
+    console.log(provinceName)
   };
 
   return (

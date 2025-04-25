@@ -7,16 +7,17 @@ import "../LanguageMapping/LanguageMapping.css";
 
 const LanguageMapping = () => {
   const [activeTab, setActiveTab] = useState("Information");
-  const [selectedProvince, setSelectedProvince] = useState(null);
+  const [selectedProvince, setSelectedProvince] = useState("**Province**");
+
 
   const handleProvinceClick = (provinceName) => {
-    setSelectedProvince(provinceName);
+    setSelectedProvince(provinceName || "**Province**");
   };
 
   return (
     <div className="language-mapping">
       <div className="sidebar-container">
-        <SideBar activeTab={activeTab} setActiveTab={setActiveTab}>
+        <SideBar activeTab={activeTab} setActiveTab={setActiveTab} provinceName={selectedProvince}>
           {activeTab === "Information" && (
             <Information selectedProvince={selectedProvince} />
           )}
