@@ -1,0 +1,62 @@
+.breathe-baguio-section {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 50px); 
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #001f16; 
+}
+
+.breathe-background-img {
+  position: absolute;
+  width: 80%;     
+  height: 80%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.8;    
+  border-radius: 50px;
+}
+
+.breathe-container {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 40px;
+  border-radius: 20px;
+  color: #e8f1e8;
+  max-width: 900px;
+}
+
+.breathe-title {
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 5px;
+}
+
+.breathe-description {
+  font-size: 1.4rem;
+  line-height: 1.8;
+  margin-bottom: 30px;
+  color: #C3EDB8;
+}
+
+.try-now-button {
+  background-color: #b2ead6;
+  color: #003d2d;
+  padding: 18px 40px; 
+  font-size: 1.6rem; 
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); 
+}
+
+.try-now-button:hover {
+  background-color: #86c4b0;
+}
