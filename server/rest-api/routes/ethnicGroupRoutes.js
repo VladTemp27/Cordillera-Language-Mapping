@@ -1,18 +1,23 @@
 const express = require('express');
-const {getProvincesWithEthnicGroups, getEthnicGroupsByProvinceId } = require("../data-service/ethnicGroupDAL");
+const {getProvincesWithEthnicGroups, getEthnicGroupsByProvinceId } = require("../services/dal-service/data-service/EthnicGroupDAL");
 
 const router = express.Router();
 
 router.get('/getAll', async (req, res) => {
     try {
-        const ethnicGroups = await getProvincesWithEthnicGroups();
-        res.json(ethnicGroups);
+        const rawData = await getProvincesWithEthnicGroups();
+        const formattedData = {
+            provinces: rawData.map(province => ({
+                name: province.name,
+                history: province.history,
+                ethnicGroups: province.ethnicGroups.map(group => group.name)
+            }))
+        };
+        res.json(formattedData);
     } catch (error) {
         res.status(500).json({ error: error.message });
-
     }
 });
-
 
 router.get('/province/:id', async (req, res) => {
     try {
@@ -21,8 +26,15 @@ router.get('/province/:id', async (req, res) => {
             return res.status(400).json({ error: 'Invalid province ID' });
         }
         
-        const ethnicGroups = await getEthnicGroupsByProvinceId(provinceId);
-        res.json(ethnicGroups);
+        const rawData = await getEthnicGroupsByProvinceId(provinceId);
+        const formattedData = {
+            provinces: [{
+                name: rawData.name,
+                history: rawData.history,
+                ethnicGroups: rawData.ethnicGroups.map(group => group.name)
+            }]
+        };
+        res.json(formattedData);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
