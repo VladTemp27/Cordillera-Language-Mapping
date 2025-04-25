@@ -9,6 +9,7 @@ import baguioSeal from "../../assets/BaguioLogo.png";
 import baguioPocket from "../../assets/BIMP.png";
 import trafficMon from "../../assets/CGOB.png";
 import mayorPic from "../../assets/Magalong.png";
+import QuickLinks from "../QuickLinks/QuickLinks";  // Aaron - QuickLinks Component
 // ------------------------
 
 const LandingPage = () => (
@@ -55,7 +56,7 @@ const LandingPage = () => (
       />
     </section>
 
-    {/* Quick links */}
+    {/* Quick links
     <section className="lp-links">
       <h3>QUICK LINKS</h3>
       <p>Quick access to Baguio City websites</p>
@@ -64,7 +65,9 @@ const LandingPage = () => (
         <LinkCard img={baguioPocket} label="Baguio in my Pocket" />
         <LinkCard img={trafficMon} label="Traffic Monitoring (CGOB)" />
       </div>
-    </section>
+    </section> */}
+
+    <QuickLinks /> 
 
     {/* Mayor */}
     <section className="lp-mayor">
