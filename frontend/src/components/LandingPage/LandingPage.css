@@ -1,10 +1,9 @@
 /* ---------- Global wrapper ---------- */
 .lp-wrapper {
     min-height: 100vh;
-    font-family: "Inter", Arial, sans-serif;
     /* emerald‑400 → emerald‑900 vertical gradient + glow */
-    background: radial-gradient(circle at 50% -20%, #4ade80 0%, #166534 40%, #022c22 90%);
-    color: #f5f5f5;
+    background:#001f16;
+    color: black;
   }
   
   /* remove default gap above h1 */
@@ -23,19 +22,44 @@
     backdrop-filter: blur(3px);
     display: flex;
     flex-direction: column;
-    gap: 2px;
   }
   
-  .lp-header-sub {
-    font-size: 0.66rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    opacity: 0.9;
+  .lp-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align content to the left */
+    padding: 10px;
   }
-  
+
+  .lp-header-title-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the logo and text */
+  }
+
+  .lp-header-logo {
+    width: 60px; /* Adjust the size of the logo */
+    height: auto;
+  }
+
+  .lp-header-text {
+    display: flex;
+    flex-direction: column;
+    color: white
+  }
+
   .lp-header-title {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .lp-header-sub {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+    margin: 0;
   }
   
   /* ---------- Hero ---------- */
@@ -107,19 +131,18 @@
   
   /* ---------- Tagline ---------- */
   .lp-tagline {
-    margin: 20px auto 0;
+    color: white;
     max-width: 740px;
-    font-size: 0.85rem;
-    text-align: center;
-    padding: 0 12px;
+    font-size: large;
     font-weight: 500;
   }
   
   /* ---------- Feature Cards ---------- */
   .lp-features {
+    align-items: center;
     margin: 24px auto 0;
     max-width: 1080px;
-    padding: 0 12px;
+    padding: 24px 12px;
     display: flex;
     flex-direction: column;
     gap: 22px;
@@ -129,7 +152,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 14px;
-    background: rgba(255, 255, 255, 0.08);
+    background: #001f16;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
@@ -157,6 +180,7 @@
   }
   
   .lp-card-body {
+    background-color: #ffff;
     padding: 20px 22px;
     display: flex;
     flex-direction: column;
@@ -164,7 +188,7 @@
   }
   
   .lp-card-body h4 {
-    color: #d9f99d; /* lime‑100 */
+    color: red; /* lime‑100 */
     font-size: 0.98rem;
     margin-bottom: 6px;
     font-weight: 600;
@@ -294,4 +318,3 @@
   html {
     scroll-behavior: smooth;
   }
-  
