@@ -12,12 +12,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API Routes
-app.use('/api/ethnic-groups', ethnicGroupRoutes);
-app.use('/api/languages', languageRoutes);  
-app.use('/api/provinces', provinceRoutes);
+app.use('/ethnic-groups', ethnicGroupRoutes);
+app.use('/languages', languageRoutes);  
+app.use('/provinces', provinceRoutes);
 
 // Health check endpoint
-app.get("/status", (req, res) => {
+app.get("/health", (req, res) => {
     res.status(200).json({
         status: "success",
         message: "Server is up and running",
