@@ -5,7 +5,8 @@ const { getLanguagesByProvinceId } = require("../services/dal-service/data-servi
 
 const router = express.Router();
 
-router.get('/getAll', async (req, res) => {
+router.get('/getall', async (req, res) => {
+    console.log('Fetching all provinces');
     try {
         const provinces = await getAllProvinces();
         const formattedProvinces = {
@@ -13,6 +14,7 @@ router.get('/getAll', async (req, res) => {
                 const ethnicGroups = await getEthnicGroupsByProvinceId(province.id);
                 const languages = await getLanguagesByProvinceId(province.id);
                 return {
+                    id: province.id,
                     name: province.name,
                     history: province.history,
                     ethnicGroups: ethnicGroups.map(eg => eg.name),
