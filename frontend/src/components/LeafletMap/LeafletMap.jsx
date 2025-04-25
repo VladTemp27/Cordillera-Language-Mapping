@@ -7,6 +7,15 @@ import car_region_data from "../../assets/data/car_region.json"; // Example data
 const LeafletMap = ({ onProvinceClick }) => {
   console.log("GeoJSON Data:", car_region_data); // Ensure the GeoJSON data is loaded
 
+  const highlightFeature = (e => {
+    const { highlightedProvince } = e.target.setStyle({
+      strokeWidth: 5,
+      color: '#666',
+      dashArray: '',
+      fillOpacity: 0.7
+  });
+  });
+
   const handleProvinceClick = (provinceName) => {
     onProvinceClick(provinceName);
     console.log(provinceName)
