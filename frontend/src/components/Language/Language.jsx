@@ -8,10 +8,37 @@ const columnsForTable1 = [
   { header: "Percentage", accessor: "percentage" },
 ];
 
+// Subject to change
 const columnsForTable2 = [
   { header: "English", accessor: "english" },
   { header: "Translation", accessor: "translation" },
 ];
+
+/**
+ * Essentially, data will be used in the table rows must be in the form of an array.
+ * 
+ * Elements in the array must be objects with keys that match the accessors defined in the columns.
+ * Example: dialect: "Ilocano", household_count: 44501, percentage: 75.50
+ *  */
+const sampleData = {
+  dialect: [
+    {
+      dialect: "Ilocano",
+      household_count: 44501,
+      percentage: 75.50
+    },
+    {
+      dialect: "Itneg/Tinguian-Maeng",
+      household_count: 44501,
+      percentage: 75.50
+    },
+    {
+      dialect: "Isnag",
+      household_count: 44501,
+      percentage: 75.50
+    },
+  ],
+};
 
 const Language = () => {
 
@@ -19,6 +46,7 @@ const Language = () => {
     <div className="language-content">
       <LanguageTable 
         columns={columnsForTable1} 
+        data={sampleData.dialect}
       />
 
       <h2>**Language**</h2>

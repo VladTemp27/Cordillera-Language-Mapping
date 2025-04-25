@@ -4,32 +4,6 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import car_region_data from "../../assets/data/car_region.json"; // Example data
 
-function onEachFeature(feature, layer) {
-  layer.on({
-    click: highlightFeature,
-    mouseout: resetHighlight,
-  });
-}
-
-function highlightFeature(e) {
-    var layer = e.target;
-    const { risques7, libelle} = e.target.feature.properties;
-    setOnselect({
-        risques:risques7,
-        libelle:libelle,
-    });
-    layer.setStyle({
-    weight: 5,
-    color: '#666',
-    dashArray: '',
-    fillOpacity: 0.7
-    });
-  }
-  function resetHighlight(e) {
-    setOnselect({});
-    e.target.setStyle(style(e.target.feature));
-  }
-
 const LeafletMap = ({ onProvinceClick }) => {
   console.log("GeoJSON Data:", car_region_data); // Ensure the GeoJSON data is loaded
 
@@ -52,12 +26,14 @@ const LeafletMap = ({ onProvinceClick }) => {
         maxNativeZoom={20}
         noWrap={false}
       />
-      {car_region_data && (
-        <GeoJSON
-          data={car_region_data}
-          onEachFeature={onEachFeature}
-        />
-      )}
+      <GeoJSON
+        data={car_region_data}
+        onEachFeature={(feature, layer) => {
+          layer.on("click", () => {
+            handleProvinceClick(feature.properties.name);
+          });
+        }}
+      />
     </MapContainer>
   );
 };
