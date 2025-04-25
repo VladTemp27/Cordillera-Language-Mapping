@@ -10,25 +10,47 @@ Programmer: Benny Gil A. Lactaotao
 """
 
 import os
-
+import sys
+import shapely
 import folium
 import geopandas as gpd
 import pandas as pd
 from folium.features import GeoJsonTooltip
 from shapely.ops import unary_union
+from shapely.geometry import Polygon, MultiPolygon, LinearRing
 
-from map_filter import load_or_prepare_data, load_baguio_data
+# Get the absolute path to the project directory
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Import local modules
+sys.path.append(PROJECT_DIR) 
+from utils.map_filter import load_or_prepare_data, load_baguio_data
 
 # Constants
 REGION_CODE = "14"  # CAR region
 REGION_NAME = "Cordillera Administrative Region (CAR)"
-SHAPEFILE_PATH = "PH_Adm2_ProvDists.shp/PH_Adm2_ProvDists.shp.shp"
 
-OUTPUT_DIR = "data"
-OUTPUT_GEOJSON = f"{OUTPUT_DIR}/car_provinces.geojson"
-BAGUIO_GEOJSON = f"{OUTPUT_DIR}/baguio.geojson"
-MODIFIED_GEOJSON = f"{OUTPUT_DIR}/car_region.json"
-OUTPUT_MAP = "CAR_map.html"
+# Define data directory within utils
+UTILS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(UTILS_DIR, "data")
+
+# Create data directory if it doesn't exist
+os.makedirs(DATA_DIR, exist_ok=True)
+
+# Fix shapefile path - use correct path structure without duplicate extensions
+SHAPEFILE_PATH = os.path.join(DATA_DIR, "PH_Adm2_ProvDists.shp")
+if not os.path.exists(SHAPEFILE_PATH):
+    # Alternative path options if first path doesn't exist
+    SHAPEFILE_PATH = os.path.join(PROJECT_DIR, "data", "PH_Adm2_ProvDists.shp")
+    if not os.path.exists(SHAPEFILE_PATH):
+        SHAPEFILE_PATH = os.path.join(PROJECT_DIR, "PH_Adm2_ProvDists.shp")
+
+# Output paths
+OUTPUT_DIR = DATA_DIR
+OUTPUT_GEOJSON = os.path.join(OUTPUT_DIR, "car_provinces.geojson")
+BAGUIO_GEOJSON = os.path.join(OUTPUT_DIR, "baguio.geojson")
+MODIFIED_GEOJSON = os.path.join(OUTPUT_DIR, "car_region.json")
+OUTPUT_MAP = os.path.join(PROJECT_DIR, "CAR_map.html")
 
 # Map styling
 REGION_STYLE = {
@@ -73,6 +95,37 @@ def add_region_layer(m, gdf, region_name):
         style_function=lambda x: REGION_STYLE,
         tooltip=region_tooltip,
     ).add_to(m)
+
+
+def ensure_right_hand_rule(gdf):
+    """
+    Ensure all polygons follow the right-hand rule (exterior rings counterclockwise,
+    interior rings clockwise) as required by GeoJSON specification.
+    """
+    def fix_polygon(geom):
+        if isinstance(geom, Polygon):
+            # Get exterior ring and make it counterclockwise
+            exterior = geom.exterior
+            if not exterior.is_ccw:
+                exterior = LinearRing(list(exterior.coords)[::-1])
+            
+            # Get interior rings and make them clockwise
+            interiors = []
+            for interior in geom.interiors:
+                if interior.is_ccw:
+                    interior = LinearRing(list(interior.coords)[::-1])
+                interiors.append(interior)
+            
+            return Polygon(exterior, interiors)
+        
+        elif isinstance(geom, MultiPolygon):
+            return MultiPolygon([fix_polygon(part) for part in geom.geoms])
+        
+        return geom
+
+    # Apply the fix to each geometry in the GeoDataFrame
+    gdf['geometry'] = gdf['geometry'].apply(fix_polygon)
+    return gdf
 
 
 def process_baguio_cutout(gdf, baguio_gdf):
@@ -126,12 +179,23 @@ def process_baguio_cutout(gdf, baguio_gdf):
     baguio_df = gpd.GeoDataFrame([baguio_row], geometry="geometry", crs=gdf_modified.crs)
     gdf_modified = gpd.GeoDataFrame(pd.concat([gdf_modified, baguio_df], ignore_index=True))
     
+    # Ensure all geometries follow the right-hand rule before saving
+    gdf_modified = ensure_right_hand_rule(gdf_modified)
+    
     # Save the modified GeoJSON for inspection
+    # Use to_crs(epsg=4326) to ensure proper GeoJSON format without old CRS style
     os.makedirs(os.path.dirname(MODIFIED_GEOJSON), exist_ok=True)
-    gdf_modified.to_file(MODIFIED_GEOJSON, driver="GeoJSON")
-    print("Created modified GeoJSON with Baguio cutout")
+    
+    # Make sure to convert to EPSG:4326 which is standard for GeoJSON
+    if gdf_modified.crs and gdf_modified.crs != "EPSG:4326":
+        gdf_modified = gdf_modified.to_crs(epsg=4326)
+    
+    # Save without including the CRS specification in the GeoJSON output
+    gdf_modified.to_file(MODIFIED_GEOJSON, driver="GeoJSON", crs=None)
+    print(f"Created modified GeoJSON with Baguio cutout at {MODIFIED_GEOJSON}")
 
     return gdf_modified
+
 
 def add_baguio_layer(m, baguio_gdf):
     """Add Baguio City as a separate layer to the map."""
@@ -159,21 +223,17 @@ def create_map(gdf, center, region_name, baguio_path=None, output_file="CAR_map.
     m = folium.Map(location=center, zoom_start=9, tiles="CartoDB positron")
 
     # Process Baguio cutout if available
+    print(f"Looking for Baguio data at: {baguio_path}")
     baguio_gdf = load_baguio_data(baguio_path, gdf.crs) if baguio_path else None
 
     if baguio_gdf is not None:
+        print(f"Baguio data loaded successfully with {len(baguio_gdf)} features")
         try:
             # Process Baguio cutout and add layers
             gdf_modified = process_baguio_cutout(gdf, baguio_gdf)
             add_region_layer(m, gdf_modified, region_name)
             add_baguio_layer(m, baguio_gdf)
-            
-            # Ensure modified GeoJSON is saved
-            os.makedirs(os.path.dirname(MODIFIED_GEOJSON), exist_ok=True)
-            gdf_modified.to_file(MODIFIED_GEOJSON, driver="GeoJSON")
-            print(f"Modified GeoJSON with Baguio cutout saved to {MODIFIED_GEOJSON}")
-            
-        except (IOError, ValueError, TypeError) as e:
+        except Exception as e:
             print(f"Error processing Baguio cutout: {e}")
             # Fall back to regular mapping without cutout
             add_region_layer(m, gdf, region_name)
@@ -186,10 +246,56 @@ def create_map(gdf, center, region_name, baguio_path=None, output_file="CAR_map.
     m.save(output_file)
     print(f"Map saved to {output_file}")
 
+
 def main():
     """Load data and create the CAR map with Baguio City cutout."""
-    # Load existing data or create new filtered data
-    gdf = load_or_prepare_data(SHAPEFILE_PATH, REGION_CODE, OUTPUT_GEOJSON)
+    # First check if GeoJSON exists
+    if os.path.exists(OUTPUT_GEOJSON):
+        print(f"Using existing GeoJSON file: {OUTPUT_GEOJSON}")
+        try:
+            gdf = gpd.read_file(OUTPUT_GEOJSON)
+            
+            # Fix the CRS issue - ensure we're using EPSG:4326 for GeoJSON
+            if gdf.crs and gdf.crs != "EPSG:4326":
+                gdf = gdf.to_crs(epsg=4326)
+                
+            # Ensure geometries follow right-hand rule
+            gdf = ensure_right_hand_rule(gdf)
+            
+            # Re-save the file with proper format
+            gdf.to_file(OUTPUT_GEOJSON, driver="GeoJSON", crs=None)
+            print(f"Fixed and re-saved GeoJSON file at: {OUTPUT_GEOJSON}")
+        except Exception as e:
+            print(f"Error loading GeoJSON data: {e}")
+            return
+    else:
+        # If GeoJSON doesn't exist, check if shapefile exists
+        if not os.path.exists(SHAPEFILE_PATH):
+            print(f"Warning: Neither GeoJSON nor shapefile found.")
+            print(f"- GeoJSON not found at: {OUTPUT_GEOJSON}")
+            print(f"- Shapefile not found at: {SHAPEFILE_PATH}")
+            print("Please download the required data or generate GeoJSON file.")
+            print(f"Current working directory: {os.getcwd()}")
+            
+            # Search for alternative data files
+            geojson_files = [f for f in os.listdir('.') if f.endswith('.geojson') or f.endswith('.json')]
+            shp_files = [f for f in os.listdir('.') if f.endswith('.shp')]
+            
+            if geojson_files:
+                print(f"Found these GeoJSON files: {geojson_files}")
+                print("Try changing OUTPUT_GEOJSON to use one of these files.")
+            if shp_files:
+                print(f"Found these shapefiles: {shp_files}")
+                print("Try changing SHAPEFILE_PATH to use one of these files.")
+            return
+        
+        # Load data from shapefile
+        try:
+            print(f"GeoJSON not found, preparing from shapefile: {SHAPEFILE_PATH}")
+            gdf = load_or_prepare_data(SHAPEFILE_PATH, REGION_CODE, OUTPUT_GEOJSON)
+        except Exception as e:
+            print(f"Error loading data from shapefile: {e}")
+            return
 
     # Calculate map center and create map
     center = calculate_map_center(gdf)
