@@ -3,9 +3,9 @@ const { testConnection } = require('./services/dal-service/config/db');
 require('dotenv').config();
 
 const app = express();
-const ethnicGroupRoutes = require('./services/dal-service/routes/ethnicGroupRoutes');
-const languageRoutes = require('./services/dal-service/routes/languageRoutes');
-const provinceRoutes = require('./services/dal-service/routes/provinceRoutes');
+const ethnicGroupRoutes = require('./routes/ethnicGroupRoutes');
+const languageRoutes = require('./routes/languageRoutes');
+const provinceRoutes = require('./routes/provinceRoutes');
 
 // Middleware
 app.use(express.json());
