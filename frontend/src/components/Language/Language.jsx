@@ -72,7 +72,7 @@ export default Language;
 function fetchProvinceID(provinceName) {
     console.log("Fetching Province Data");
     return axios
-        .get("http://localhost/api/provinces/getAll")
+        .get("/api/provinces/getAll")
         .then((response) => {
             const provinces = response.data.provinces;
             const matched = provinces.find((p) => p.name === provinceName);
@@ -87,7 +87,7 @@ function fetchProvinceID(provinceName) {
 function fetchLanguagesByProvince(provinceID) {
     console.log(`Fetching language data for ${provinceID}`);
     return axios
-        .get(`http://localhost/api/languages/raw/province/${provinceID}`)
+        .get(`/api/languages/raw/province/${provinceID}`)
         .then((response) => {
             const formatted = response.data.map((lang) => ({
                 dialect: lang.name,

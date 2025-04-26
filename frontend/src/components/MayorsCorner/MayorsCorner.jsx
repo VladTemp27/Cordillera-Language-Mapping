@@ -1,4 +1,6 @@
 import "./MayorsCorner.css"
+import rectangleImg from "../../assets/Rectangle.png";
+import magalongImg from "../../assets/Magalong.png";
 
 const MayorsCorner = () => {
   return (
@@ -31,12 +33,12 @@ const MayorsCorner = () => {
         <div className="mayors-corner-image-container">
           <div className="mayors-corner-image-frame">
             <div className="rectangle-top-right">
-              <img src="src/assets/Rectangle.png" alt="" className="rectangle-image" />
+              <img src={rectangleImg} alt="" className="rectangle-image" />
             </div>
             <div className="rectangle-bottom-left">
-              <img src="src/assets/Rectangle.png" alt="" className="rectangle-image" />
+              <img src={rectangleImg} alt="" className="rectangle-image" />
             </div>
-            <img src="src/assets/Magalong.png" alt="Mayor Benjamin Magalong" className="mayors-corner-image" />
+            <img src={magalongImg} alt="Mayor Benjamin Magalong" className="mayors-corner-image" />
           </div>
         </div>
       </div>

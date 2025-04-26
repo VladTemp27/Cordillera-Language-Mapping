@@ -63,7 +63,7 @@ const Information = ({ selectedProvince }) => {
           <div className="loading-spinner"></div>
           <p>Loading province information...</p>
         </div>
-      ) : error ? (
+      ) : error && selectedData ? (
         <div className="error-message">
           <p>{error}</p>
         </div>
@@ -87,7 +87,7 @@ const Information = ({ selectedProvince }) => {
 
 function fetchData(provinceName) {
   console.log("Fetching data for province:", provinceName);
-  return axios.get('http://localhost/api/provinces/getAll')
+  return axios.get('/api/provinces/getAll')
     .then((response) => {
       return response.data;
     })
