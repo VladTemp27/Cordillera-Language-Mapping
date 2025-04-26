@@ -10,7 +10,7 @@ import Help from "../modals/Help";
 const LanguageMapping = () => {
   const [activeTab, setActiveTab] = useState("Information");
   const [selectedProvince, setSelectedProvince] = useState("Select a province");
-  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(true);
 
   const handleProvinceClick = (provinceName) => {
     setSelectedProvince(provinceName || "Select a province");
