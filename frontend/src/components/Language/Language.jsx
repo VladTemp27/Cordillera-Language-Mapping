@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import LanguageTable from "./LanguageTable";
 import "./Language.css";
 import axios from "axios";
+import LanguageChart from "./LanguageChart";
 
 const apiUrl = process.env.VITE_API_URL
 
@@ -57,9 +58,7 @@ const Language = ({provinceName}) => {
                         data={provinceLanguages.dialect}
                     />
 
-                    {/*we dont have the data for this so bye bye*/}
-                    {/*<h2>**Language**</h2>*/}
-                    {/*<LanguageTable columns={columnsForTable2}/>*/}
+                    <LanguageChart languageData={provinceLanguages.dialect} />
                 </>
             ) : (
                 <p>Loading data...</p>
