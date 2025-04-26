@@ -16,30 +16,20 @@ const SearchBar = ({ onSearch }) => {
 
     const fetchSuggestions = async () => {
       try {
-        let response;
-        if (query.startsWith('lang:')) {
-          // Search by language
-          const languageQuery = query.replace('lang:', '').trim();
-          response = await axios.get(`http://localhost/api/provinces/search/language?name=${languageQuery}`);
-        } else {
-          // Search by province
-          response = await axios.get(`http://localhost/api/provinces/search/province?name=${query}`);
-        }
+        const [provinceResponse, languageResponse] = await Promise.all([
+          axios.get(`http://localhost/api/provinces/search/province?name=${query}`),
+          axios.get(`http://localhost/api/provinces/search/language?name=${query}`)
+        ]);
 
-        if (response.headers['content-type']?.includes('application/json')) {
-          let data = response.data.provinces || [];
+        const provinceData = provinceResponse.data.provinces || [];
+        const languageData = languageResponse.data.provinces || [];
 
-          // Filter suggestions by the first letter of the query
-          const firstLetter = query[0].toLowerCase();
-          data = data.filter((item) => item.name.toLowerCase().startsWith(firstLetter));
+        // Merge and remove duplicates based on province ID
+        const merged = [...provinceData, ...languageData];
+        const uniqueProvinces = Array.from(new Map(merged.map(item => [item.id, item])).values());
 
-          setSuggestions(data);
-          setShowDropdown(data.length > 0);
-        } else {
-          console.error('Unexpected response format:', response.data);
-          setSuggestions([]);
-          setShowDropdown(false);
-        }
+        setSuggestions(uniqueProvinces);
+        setShowDropdown(uniqueProvinces.length > 0);
       } catch (error) {
         console.error('Error fetching suggestions:', error);
         setSuggestions([]);
@@ -57,13 +47,17 @@ const SearchBar = ({ onSearch }) => {
   const handleSuggestionClick = (suggestion) => {
     setQuery(suggestion.name);
     setShowDropdown(false);
-    onSearch({ name: suggestion.name === 'language' ? suggestion.province : suggestion.name,
-      type: suggestion.type,
+    onSearch({ 
+      name: suggestion.name,
+      type: 'suggestion'
     });
   };
 
   const handleSearch = () => {
-    onSearch({ name: query, type: 'manual' }); // Trigger search with the current query
+    onSearch({ 
+      name: query, 
+      type: 'manual' 
+    });
   };
 
   return (
