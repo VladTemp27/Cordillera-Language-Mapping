@@ -13,6 +13,10 @@ const LanguageMapping = () => {
     setSelectedProvince(provinceName || "**Province**");
   };
 
+  const handleSearch = (searchData) => {
+    setSelectedProvince(searchData.name);
+  };
+
   return (
     <div className="language-mapping">
       <div className="sidebar-container">
@@ -20,11 +24,14 @@ const LanguageMapping = () => {
           {activeTab === "Information" && (
             <Information selectedProvince={selectedProvince} />
           )}
-            {activeTab === "Language" && <Language provinceName={selectedProvince} />}
+          {activeTab === "Language" && <Language provinceName={selectedProvince} />}
         </SideBar>
       </div>
       <div className="map-container">
-          <LeafletMap onProvinceClick={handleProvinceClick} />
+        <LeafletMap 
+          onProvinceClick={handleProvinceClick} 
+          selectedProvinceFromSearch={selectedProvince} 
+        />
       </div>
     </div>
   );

@@ -32,10 +32,16 @@ const MapClickHandler = ({ onClick }) => {
   return null;
 };
 
-const LeafletMap = ({ onProvinceClick }) => {
+const LeafletMap = ({ onProvinceClick, selectedProvinceFromSearch }) => {
   console.log("GeoJSON Data:", car_region_data);
   const [selectedProvince, setSelectedProvince] = useState(null); // State to track the selected layer
   const geoJsonRef = useRef();
+
+  useEffect(() => {
+    if (selectedProvinceFromSearch) {
+      setSelectedProvince(selectedProvinceFromSearch);
+    }
+  }, [selectedProvinceFromSearch]);  
 
   const getFeatureStyle = (feature) => {
     return feature.properties.adm2_en === selectedProvince
