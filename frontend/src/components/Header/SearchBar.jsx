@@ -13,7 +13,7 @@ const SearchBar = ({ onSearch }) => {
       setShowDropdown(false);
       return;
     }
-  
+
     const fetchSuggestions = async () => {
       try {
         let response;
@@ -25,9 +25,14 @@ const SearchBar = ({ onSearch }) => {
           // Search by province
           response = await axios.get(`http://localhost/api/provinces/search/province?name=${query}`);
         }
-    
+
         if (response.headers['content-type']?.includes('application/json')) {
-          const data = response.data.provinces || [];
+          let data = response.data.provinces || [];
+
+          // Filter suggestions by the first letter of the query
+          const firstLetter = query[0].toLowerCase();
+          data = data.filter((item) => item.name.toLowerCase().startsWith(firstLetter));
+
           setSuggestions(data);
           setShowDropdown(data.length > 0);
         } else {
@@ -41,7 +46,7 @@ const SearchBar = ({ onSearch }) => {
         setShowDropdown(false);
       }
     };
-  
+
     fetchSuggestions();
   }, [query]);
 
