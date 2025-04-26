@@ -3,6 +3,12 @@ const {getProvincesWithEthnicGroups, getEthnicGroupsByProvinceId } = require("..
 
 const router = express.Router();
 
+router.get('/health', (req, res) => {
+    res.status(200).json({
+        status: "success",
+    });
+});
+
 router.get('/getAll', async (req, res) => {
     try {
         const rawData = await getProvincesWithEthnicGroups();

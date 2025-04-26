@@ -21,7 +21,7 @@ const LanguageMapping = () => {
           {activeTab === "Information" && (
             <Information selectedProvince={selectedProvince} />
           )}
-          {activeTab === "Language" && <Language />}
+            {activeTab === "Language" && <Language provinceName={selectedProvince} />}
         </SideBar>
       </div>
       <div className="map-container">

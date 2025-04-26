@@ -19,7 +19,9 @@ const router = createBrowserRouter([{
       },
     ],
   },
-]);
+],{
+  basename: '/Cordillera-Language-Mapping/',
+});
 
 createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
