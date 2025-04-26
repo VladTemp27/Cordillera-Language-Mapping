@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Information.css";
 import axios from "axios";
 
-const apiUrl = process.env.API_URL;
+const apiUrl = process.env.VITE_API_URL;
 
 // Asset Imports
 import baguio from "../../assets/Baguio.png";

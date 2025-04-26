@@ -3,7 +3,7 @@ import LanguageTable from "./LanguageTable";
 import "./Language.css";
 import axios from "axios";
 
-const apiUrl = process.env.API_URL
+const apiUrl = process.env.VITE_API_URL
 
 const columnsForTable1 = [
     {header: "Dialect", accessor: "dialect"},
