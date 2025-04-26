@@ -1,0 +1,96 @@
+/* Modal Backdrop */
+.help-modal-backdrop {
+  position: fixed; /* Sit on top of everything */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* Ensure it's above the help button and map */
+  padding: 20px; /* Add padding for smaller screens */
+  box-sizing: border-box;
+}
+
+/* Modal Content Box */
+.help-modal-content {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-width: 600px; /* Limit maximum width */
+  width: 90%; /* Responsive width */
+  position: relative; /* Needed for absolute positioning of the close button */
+  max-height: 80vh; /* Limit height and allow scrolling if needed */
+  overflow-y: auto; /* Add scrollbar if content overflows */
+}
+
+/* Close Button */
+.help-modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2rem; /* Make the 'x' larger */
+  color: #666;
+  cursor: pointer;
+  line-height: 1; /* Adjust line height for better positioning */
+  padding: 0;
+}
+
+.help-modal-close-btn:hover {
+  color: #333;
+}
+
+/* Modal Title */
+.help-modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+/* Instructions List */
+.help-instructions {
+  list-style: none; /* Remove default bullet points */
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+
+.help-instructions li {
+  margin-bottom: 15px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.help-instructions strong {
+  color: #0056b3; /* Highlight key actions */
+  display: block; /* Put strong text on its own line */
+  margin-bottom: 5px;
+}
+
+.help-instructions ul {
+  list-style: disc; /* Use standard bullets for sub-list */
+  margin-top: 8px;
+  margin-left: 25px; /* Indent sub-list */
+  padding-left: 0;
+}
+
+.help-instructions ul li {
+  margin-bottom: 5px;
+  color: #666;
+}
+
+/* Note at the bottom */
+.help-note {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 25px;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
