@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 import "../LandingPage/LandingPage.css";
 import baguioSeal from "../../assets/BaguioLogo.png";
+import SearchBar from "./SearchBar.jsx";
 
 const Header = ({ setActiveTab }) => {
   const navigate = useNavigate();
@@ -11,8 +12,8 @@ const Header = ({ setActiveTab }) => {
 
   return (
       <header className="lp-header">
-        <div className="lp-header-content" onClick={handleLogoClick}>
-          <div className="lp-header-title-container">
+        <div className="lp-header-content">
+          <div className="lp-header-title-container" onClick={handleLogoClick}>
             <img
               src={baguioSeal}
               alt="Baguio Logo"
@@ -23,6 +24,7 @@ const Header = ({ setActiveTab }) => {
               <h1 className="lp-header-title">City Government of Baguio</h1>
             </div>
           </div>
+          <SearchBar />
         </div>
       </header>
   );

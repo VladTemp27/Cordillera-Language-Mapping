@@ -9,6 +9,13 @@ const LanguageMapping = () => {
   const [activeTab, setActiveTab] = useState("Information");
   const [selectedProvince, setSelectedProvince] = useState("**Province**");
 
+  const handleSearch = (searchResult) => {
+    if (searchResult.type === 'province') {
+      setSelectedProvince(searchResult.name);
+    } else if (searchResult.type === 'language') {
+      setSelectedProvince(searchResult.province);
+    }
+  };
 
   const handleProvinceClick = (provinceName) => {
     setSelectedProvince(provinceName || "**Province**");
