@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./Information.css";
 import axios from "axios";
 
+const apiUrl = process.env.API_URL;
+
 // Asset Imports
 import baguio from "../../assets/Baguio.png";
 import abra from "../../assets/Abra.png";
@@ -87,7 +89,8 @@ const Information = ({ selectedProvince }) => {
 
 function fetchData(provinceName) {
   console.log("Fetching data for province:", provinceName);
-  return axios.get('/api/provinces/getAll')
+  console.log("API URL:", apiUrl);
+  return axios.get(`${apiUrl}/api/provinces/getAll`)
     .then((response) => {
       return response.data;
     })

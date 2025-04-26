@@ -15,16 +15,30 @@ const {
  * SQL queries for province operations
  */
 const PROVINCE_QUERIES = {
-	GET_ALL: `
-		SELECT id, name, history
-		FROM provinces
-		ORDER BY name ASC
-  	`,
-	GET_BY_ID: `
-		SELECT id, name, history
-		FROM provinces
-		WHERE id = $1
-  	`
+    GET_ALL: `
+        SELECT id, name, history
+        FROM provinces
+        ORDER BY name ASC
+      `,
+    GET_BY_ID: `
+        SELECT id, name, history
+        FROM provinces
+        WHERE id = $1
+      `,
+    GET_BY_NAME: `
+        SELECT id, name, history
+        FROM provinces
+        WHERE LOWER(name) LIKE LOWER($1)
+        ORDER BY name ASC
+    `,
+    GET_BY_LANGUAGE: `
+        SELECT p.id, p.name, p.history
+        FROM provinces p
+        JOIN province_languages pl ON p.id = pl.province_id
+        JOIN languages l ON pl.language_id = l.id
+        WHERE LOWER(l.name) = LOWER($1)
+        ORDER BY p.name ASC
+    `
 };
 
 /**
@@ -56,7 +70,39 @@ async function getProvinceById(provinceId) {
 	}
 }
 
+/**
+ * Retrieve provinces by matching name pattern
+ * @param {string} namePattern - Name pattern to search for (can include SQL wildcards, e.g. '%name%')
+ * @returns {Promise<Province[]>} Array of matching Province objects
+ */
+async function getProvincesByName(namePattern) {
+    try {
+        const result = await query(PROVINCE_QUERIES.GET_BY_NAME, [namePattern]);
+        return result.rows.map(row => new Province(row));
+    } catch (error) {
+        console.error(`Error retrieving provinces with name pattern '${namePattern}':`, error);
+        throw error;
+    }
+}
+
+/**
+ * Retrieve provinces by language name
+ * @param {string} languageName - Name of the language to find provinces for
+ * @returns {Promise<Province[]>} Array of Province objects where the language is spoken
+ */
+async function getProvincesByLanguage(languageName) {
+    try {
+        const result = await query(PROVINCE_QUERIES.GET_BY_LANGUAGE, [languageName]);
+        return result.rows.map(row => new Province(row));
+    } catch (error) {
+        console.error(`Error retrieving provinces for language '${languageName}':`, error);
+        throw error;
+    }
+}
+
 module.exports = {
-	getAllProvinces,
-	getProvinceById
+    getAllProvinces,
+    getProvinceById,
+    getProvincesByName,
+    getProvincesByLanguage
 };
