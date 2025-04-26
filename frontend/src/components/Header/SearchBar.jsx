@@ -17,10 +17,19 @@ const SearchBar = ({ onSearch }) => {
     const fetchSuggestions = async () => {
       try {
         const response = await axios.get(`/api/search?query=${query}`);
-        setSuggestions(response.data);
-        setShowDropdown(true);
+        if (response.headers['content-type']?.includes('application/json')) {
+          const data = Array.isArray(response.data) ? response.data : [];
+          setSuggestions(data);
+          setShowDropdown(data.length > 0);
+        } else {
+          console.error('Unexpected response format:', response.data);
+          setSuggestions([]);
+          setShowDropdown(false);
+        }
       } catch (error) {
         console.error('Error fetching suggestions:', error);
+        setSuggestions([]);
+        setShowDropdown(false);
       }
     };
 
@@ -60,7 +69,7 @@ const SearchBar = ({ onSearch }) => {
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </button>
-        {showDropdown && suggestions.length > 0 && (
+        {Array.isArray(suggestions) && suggestions.length > 0 && (
           <ul className="search-dropdown">
             {suggestions.map((suggestion) => (
               <li
