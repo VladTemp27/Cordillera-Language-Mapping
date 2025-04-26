@@ -35,7 +35,8 @@ const PROVINCE_QUERIES = {
         SELECT p.id, p.name, p.history
         FROM provinces p
         JOIN province_languages pl ON p.id = pl.province_id
-        WHERE pl.language_id = $1
+        JOIN languages l ON pl.language_id = l.id
+        WHERE LOWER(l.name) = LOWER($1)
         ORDER BY p.name ASC
     `
 };
@@ -85,16 +86,16 @@ async function getProvincesByName(namePattern) {
 }
 
 /**
- * Retrieve provinces by language ID
- * @param {number} languageId - ID of the language to find provinces for
+ * Retrieve provinces by language name
+ * @param {string} languageName - Name of the language to find provinces for
  * @returns {Promise<Province[]>} Array of Province objects where the language is spoken
  */
-async function getProvincesByLanguage(languageId) {
+async function getProvincesByLanguage(languageName) {
     try {
-        const result = await query(PROVINCE_QUERIES.GET_BY_LANGUAGE, [languageId]);
+        const result = await query(PROVINCE_QUERIES.GET_BY_LANGUAGE, [languageName]);
         return result.rows.map(row => new Province(row));
     } catch (error) {
-        console.error(`Error retrieving provinces for language ID ${languageId}:`, error);
+        console.error(`Error retrieving provinces for language '${languageName}':`, error);
         throw error;
     }
 }

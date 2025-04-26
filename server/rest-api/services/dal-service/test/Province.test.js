@@ -105,11 +105,11 @@ describe('Province Service', function() {
   // Test getProvincesByLanguage
   describe('getProvincesByLanguage()', function() {
     it('should retrieve provinces where a specific language is spoken', async function() {
-      // Using language ID 1 (Ilocano, which should exist in multiple provinces)
-      const languageId = 1;
+      // Using a common language in the region (Ilocano)
+      const languageName = 'Ilocano';
       
       // Execute the function under test
-      const provinces = await ProvinceService.getProvincesByLanguage(languageId);
+      const provinces = await ProvinceService.getProvincesByLanguage(languageName);
       
       // Verify results
       expect(Array.isArray(provinces)).toBe(true);
@@ -121,12 +121,12 @@ describe('Province Service', function() {
       });
     });
     
-    it('should return an empty array for non-existent language ID', async function() {
-      // Setup with a language ID that shouldn't exist
-      const nonExistentLanguageId = 999;
+    it('should return an empty array for non-existent language', async function() {
+      // Setup with a language that shouldn't exist
+      const nonExistentLanguage = 'NonExistentLanguage';
       
       // Execute the function under test
-      const provinces = await ProvinceService.getProvincesByLanguage(nonExistentLanguageId);
+      const provinces = await ProvinceService.getProvincesByLanguage(nonExistentLanguage);
       
       // Verify results
       expect(Array.isArray(provinces)).toBe(true);
