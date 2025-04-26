@@ -5,10 +5,10 @@
     justify-content: center;
     text-align: center;
     padding: 20px;
-    gap: 4px;
+    gap: 16px;
 }
 
-.video-container h2 {
+.video-container h1 {
     color: white;
     font-weight: normal;
 }
