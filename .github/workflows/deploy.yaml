@@ -27,9 +27,10 @@ jobs:
       - name: Build
         run: |
           cd frontend
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" > .env
           npm run build
         env:
-          API_URL: ${{ secrets.API_URL }}
+          API_URL: ${{ secrets.VITE_API_URL }}
       
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
