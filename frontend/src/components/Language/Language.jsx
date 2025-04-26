@@ -3,6 +3,8 @@ import LanguageTable from "./LanguageTable";
 import "./Language.css";
 import axios from "axios";
 
+const apiUrl = process.env.API_URL
+
 const columnsForTable1 = [
     {header: "Dialect", accessor: "dialect"},
     {header: "Household", accessor: "household_count"},
@@ -72,7 +74,7 @@ export default Language;
 function fetchProvinceID(provinceName) {
     console.log("Fetching Province Data");
     return axios
-        .get("/api/provinces/getAll")
+        .get(`${apiUrl}/api/provinces/getAll`)
         .then((response) => {
             const provinces = response.data.provinces;
             const matched = provinces.find((p) => p.name === provinceName);
@@ -87,7 +89,7 @@ function fetchProvinceID(provinceName) {
 function fetchLanguagesByProvince(provinceID) {
     console.log(`Fetching language data for ${provinceID}`);
     return axios
-        .get(`/api/languages/raw/province/${provinceID}`)
+        .get(`${apiUrl}/api/languages/raw/province/${provinceID}`)
         .then((response) => {
             const formatted = response.data.map((lang) => ({
                 dialect: lang.name,
