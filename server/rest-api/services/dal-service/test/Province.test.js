@@ -68,4 +68,69 @@ describe('Province Service', function() {
       expect(province).toBeNull();
     });
   });
+
+  // Test getProvincesByName
+  describe('getProvincesByName()', function() {
+    it('should retrieve provinces matching a name pattern', async function() {
+      // Assuming there's a province with "Mountain" in the name
+      const namePattern = '%Mountain%';
+      
+      // Execute the function under test
+      const provinces = await ProvinceService.getProvincesByName(namePattern);
+      
+      // Verify results
+      expect(Array.isArray(provinces)).toBe(true);
+      expect(provinces.length).toBeGreaterThan(0);
+      
+      // Check that all returned provinces match the pattern
+      provinces.forEach(province => {
+        expect(province.name.toLowerCase()).toContain('mountain');
+        verifyProvinceStructure(province);
+      });
+    });
+    
+    it('should return an empty array for non-matching name patterns', async function() {
+      // Setup with a name that shouldn't exist
+      const nonExistentPattern = '%NonExistentProvinceName%';
+      
+      // Execute the function under test
+      const provinces = await ProvinceService.getProvincesByName(nonExistentPattern);
+      
+      // Verify results
+      expect(Array.isArray(provinces)).toBe(true);
+      expect(provinces.length).toBe(0);
+    });
+  });
+  
+  // Test getProvincesByLanguage
+  describe('getProvincesByLanguage()', function() {
+    it('should retrieve provinces where a specific language is spoken', async function() {
+      // Using a common language in the region (Ilocano)
+      const languageName = 'Ilocano';
+      
+      // Execute the function under test
+      const provinces = await ProvinceService.getProvincesByLanguage(languageName);
+      
+      // Verify results
+      expect(Array.isArray(provinces)).toBe(true);
+      expect(provinces.length).toBeGreaterThan(0);
+      
+      // Verify structure of returned provinces
+      provinces.forEach(province => {
+        verifyProvinceStructure(province);
+      });
+    });
+    
+    it('should return an empty array for non-existent language', async function() {
+      // Setup with a language that shouldn't exist
+      const nonExistentLanguage = 'NonExistentLanguage';
+      
+      // Execute the function under test
+      const provinces = await ProvinceService.getProvincesByLanguage(nonExistentLanguage);
+      
+      // Verify results
+      expect(Array.isArray(provinces)).toBe(true);
+      expect(provinces.length).toBe(0);
+    });
+  });
 });
