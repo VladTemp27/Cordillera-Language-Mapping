@@ -9,6 +9,6 @@ export default defineConfig({
   plugins: [react()],
   base: '/Cordillera-Language-Mapping/',
   define: {
-    'process.env.API_URL': JSON.stringify(process.env.API_URL),
+    'process.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL),
   }
 })
