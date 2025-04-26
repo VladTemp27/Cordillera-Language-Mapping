@@ -13,12 +13,21 @@ const SearchBar = ({ onSearch }) => {
       setShowDropdown(false);
       return;
     }
-
+  
     const fetchSuggestions = async () => {
       try {
-        const response = await axios.get(`/api/search?query=${query}`);
+        let response;
+        if (query.startsWith('lang:')) {
+          // Search by language
+          const languageQuery = query.replace('lang:', '').trim();
+          response = await axios.get(`/api/search/language?name=${languageQuery}`);
+        } else {
+          // Search by province
+          response = await axios.get(`/api/search/province?name=${query}`);
+        }
+    
         if (response.headers['content-type']?.includes('application/json')) {
-          const data = Array.isArray(response.data) ? response.data : [];
+          const data = response.data.provinces || [];
           setSuggestions(data);
           setShowDropdown(data.length > 0);
         } else {
@@ -32,7 +41,7 @@ const SearchBar = ({ onSearch }) => {
         setShowDropdown(false);
       }
     };
-
+  
     fetchSuggestions();
   }, [query]);
 
