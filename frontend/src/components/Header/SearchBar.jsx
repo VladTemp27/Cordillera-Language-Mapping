@@ -20,10 +20,10 @@ const SearchBar = ({ onSearch }) => {
         if (query.startsWith('lang:')) {
           // Search by language
           const languageQuery = query.replace('lang:', '').trim();
-          response = await axios.get(`/api/search/language?name=${languageQuery}`);
+          response = await axios.get(`http://localhost/api/provinces/search/language?name=${languageQuery}`);
         } else {
           // Search by province
-          response = await axios.get(`/api/search/province?name=${query}`);
+          response = await axios.get(`http://localhost/api/provinces/search/province?name=${query}`);
         }
     
         if (response.headers['content-type']?.includes('application/json')) {
