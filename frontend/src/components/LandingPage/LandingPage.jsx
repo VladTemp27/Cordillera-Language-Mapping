@@ -19,7 +19,6 @@ const LandingPage = () => (
     <Hero />
     {/* Feature cards */}
     <Culture />
-    <VideoPlayer />
     {/* Quick links */}
     <QuickLinks />
     {/* Mayor's Corner */}
