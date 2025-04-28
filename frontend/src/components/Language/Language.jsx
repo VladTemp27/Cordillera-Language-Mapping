@@ -4,7 +4,7 @@ import "./Language.css";
 import axios from "axios";
 
 // Correctly access environment variables in Vite
-const apiUrl = import.meta.env.VITE_API_URL || "https://cordielleramap-benny-gils-projects.vercel.app/";
+const apiUrl ="https://cordielleramap-benny-gils-projects.vercel.app/";
 
 const columnsForTable1 = [
     {header: "Dialect", accessor: "dialect"},

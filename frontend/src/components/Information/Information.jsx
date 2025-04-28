@@ -3,7 +3,7 @@ import "./Information.css";
 import axios from "axios";
 
 // Correctly access environment variables in Vite
-const apiUrl = import.meta.env.VITE_API_URL || "https://cordielleramap-benny-gils-projects.vercel.app/";
+const apiUrl = "https://cordielleramap-benny-gils-projects.vercel.app/";
 
 // Asset Imports
 import baguio from "../../assets/Baguio.png";
