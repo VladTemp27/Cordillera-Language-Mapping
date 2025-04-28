@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./Information.css";
 import axios from "axios";
 
-const apiUrl = process.env.VITE_API_URL;
+// Correctly access environment variables in Vite
+const apiUrl = import.meta.env.VITE_API_URL || "https://cordielleramap-benny-gils-projects.vercel.app/";
 
 // Asset Imports
 import baguio from "../../assets/Baguio.png";
@@ -30,7 +31,7 @@ const Information = ({ selectedProvince }) => {
     
     console.log("Selected Province:", selectedProvince);
     setLoading(true);
-  
+
     fetchData(selectedProvince)
       .then(data => {
         console.log("Fetched Data:", data);
@@ -90,19 +91,28 @@ const Information = ({ selectedProvince }) => {
 function fetchData(provinceName) {
   console.log("Fetching data for province:", provinceName);
   console.log("API URL:", apiUrl);
-  return axios.get(`${apiUrl}/api/provinces/getAll`)
-    .then((response) => {
-      return response.data;
-    })
-    .then(data => {
-      for (let k in data.provinces) {
-        console.log("Province:", data.provinces[k].name);
-        if (data.provinces[k].name.toLowerCase() === provinceName.toLowerCase()) {
-          return data.provinces[k];
-        }
-      }
-
-      throw new Error("Province not found");
+  
+  // Use a more efficient endpoint if available
+  // Option 1: If there's a direct endpoint for a specific province
+  const endpoint = `${apiUrl}api/provinces/name/${provinceName}`;
+  
+  return axios.get(endpoint)
+    .then((response) => response.data)
+    .catch((specificError) => {
+      console.log("Specific province endpoint failed, trying general endpoint");
+      
+      // Option 2: Fallback to getting all provinces and filtering
+      const allProvincesUrl = `${apiUrl}api/provinces/getAll`;
+      return axios.get(allProvincesUrl)
+        .then((response) => {
+          const data = response.data;
+          for (let k in data.provinces) {
+            if (data.provinces[k].name.toLowerCase() === provinceName.toLowerCase()) {
+              return data.provinces[k];
+            }
+          }
+          throw new Error("Province not found");
+        });
     })
     .catch((error) => {
       console.error("Error fetching data:", error);

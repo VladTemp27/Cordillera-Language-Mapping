@@ -3,20 +3,14 @@ import LanguageTable from "./LanguageTable";
 import "./Language.css";
 import axios from "axios";
 
-const apiUrl = process.env.VITE_API_URL
+// Correctly access environment variables in Vite
+const apiUrl = import.meta.env.VITE_API_URL || "https://cordielleramap-benny-gils-projects.vercel.app/";
 
 const columnsForTable1 = [
     {header: "Dialect", accessor: "dialect"},
     {header: "Household", accessor: "household_count"},
     {header: "Percentage", accessor: "percentage"},
 ];
-
-// Subject to change
-//yes it is subject to change since we don't have data to replace this with.
-// const columnsForTable2 = [
-//     {header: "English", accessor: "english"},
-//     {header: "Translation", accessor: "translation"},
-// ];
 
 /**
  * Essentially, data will be used in the table rows must be in the form of an array.
@@ -28,8 +22,19 @@ const columnsForTable1 = [
 const Language = ({provinceName}) => {
     const [provinceID, setProvinceID] = useState(null);
     const [provinceLanguages, setProvinceLanguages] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
+        if (!provinceName) {
+            setProvinceID(null);
+            setProvinceLanguages(null);
+            return;
+        }
+        
+        setLoading(true);
+        setError(null);
+        
         async function fetchData() {
             try {
                 const id = await fetchProvinceID(provinceName);
@@ -39,9 +44,14 @@ const Language = ({provinceName}) => {
                     const languageData = await fetchLanguagesByProvince(id);
                     setProvinceLanguages(languageData);
                     console.log("Languages by Province:", languageData);
+                } else {
+                    setError(`Province "${provinceName}" not found`);
                 }
             } catch (error) {
                 console.error("Error loading data:", error);
+                setError("Failed to load language data");
+            } finally {
+                setLoading(false);
             }
         }
 
@@ -50,19 +60,19 @@ const Language = ({provinceName}) => {
 
     return (
         <div className="language-content">
-            {provinceLanguages ? (
+            {loading ? (
+                <p>Loading language data...</p>
+            ) : error ? (
+                <p className="error-message">{error}</p>
+            ) : provinceLanguages ? (
                 <>
                     <LanguageTable
                         columns={columnsForTable1}
                         data={provinceLanguages.dialect}
                     />
-
-                    {/*we dont have the data for this so bye bye*/}
-                    {/*<h2>**Language**</h2>*/}
-                    {/*<LanguageTable columns={columnsForTable2}/>*/}
                 </>
             ) : (
-                <p>Loading data...</p>
+                <p>Select a province to view language data</p>
             )}
         </div>
     );
@@ -70,11 +80,13 @@ const Language = ({provinceName}) => {
 
 export default Language;
 
-// Keep these helper functions the same
+// Update the helper functions to make direct API calls without the proxy
 function fetchProvinceID(provinceName) {
     console.log("Fetching Province Data");
+    const endpoint = `${apiUrl}api/provinces/getAll`;
+    
     return axios
-        .get(`${apiUrl}/api/provinces/getAll`)
+        .get(endpoint)
         .then((response) => {
             const provinces = response.data.provinces;
             const matched = provinces.find((p) => p.name === provinceName);
@@ -88,13 +100,15 @@ function fetchProvinceID(provinceName) {
 
 function fetchLanguagesByProvince(provinceID) {
     console.log(`Fetching language data for ${provinceID}`);
+    const endpoint = `${apiUrl}api/languages/raw/province/${provinceID}`;
+    
     return axios
-        .get(`${apiUrl}/api/languages/raw/province/${provinceID}`)
+        .get(endpoint)
         .then((response) => {
             const formatted = response.data.map((lang) => ({
                 dialect: lang.name,
                 household_count: lang.household_count,
-                percentage: `${parseFloat(lang.percentage)}%`, // 👈 Add % here
+                percentage: `${parseFloat(lang.percentage)}%`,
             }));
             return {dialect: formatted};
         })
