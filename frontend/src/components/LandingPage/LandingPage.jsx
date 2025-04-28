@@ -7,6 +7,7 @@ import Culture from "../Culture/Culture";
 import Hero from "../HeroComponent/BreatheBaguio";
 import MayorsCorner from "../MayorsCorner/MayorsCorner";
 import Header from "../Header/Header";
+import VideoPlayer from "../VideoPlayer/VideoPlayer";
 // ------------------------
 
 const LandingPage = () => (

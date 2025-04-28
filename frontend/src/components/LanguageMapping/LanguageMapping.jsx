@@ -4,14 +4,25 @@ import LeafletMap from "../LeafletMap/LeafletMap";
 import Language from "../Language/Language";
 import Information from "../Information/Information";
 import "../LanguageMapping/LanguageMapping.css";
+import HelpButton from "../buttons/HelpButton";
+import Help from "../modals/Help";
 
 const LanguageMapping = () => {
   const [activeTab, setActiveTab] = useState("Information");
-  const [selectedProvince, setSelectedProvince] = useState("**Province**");
-
+  const [selectedProvince, setSelectedProvince] = useState("Select a province");
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(true);
 
   const handleProvinceClick = (provinceName) => {
-    setSelectedProvince(provinceName || "**Province**");
+    setSelectedProvince(provinceName || "Select a province");
+  };
+
+  const handleHelpClick = () => {
+    console.log("Help button clicked!");
+    setIsHelpModalOpen(true); 
+  }
+
+  const handleCloseHelpModal = () => {
+    setIsHelpModalOpen(false);
   };
 
   return (
@@ -27,6 +38,8 @@ const LanguageMapping = () => {
       <div className="map-container">
         <LeafletMap onProvinceClick={handleProvinceClick} />
       </div>
+      <HelpButton onClick={handleHelpClick}/>
+      {isHelpModalOpen && <Help onClose={handleCloseHelpModal} />}
     </div>
   );
 };
